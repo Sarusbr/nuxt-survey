@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import language from './configs/language'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -47,12 +48,14 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
   },
-
+  modules: [
+    ['@nuxtjs/i18n',language]
+  ],
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
