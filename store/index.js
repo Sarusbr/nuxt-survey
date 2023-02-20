@@ -1,5 +1,5 @@
 export const state = function() {
     return{
-        count:12
+        title:"Anketler"
     }
 }
