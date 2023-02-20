@@ -1,24 +1,13 @@
-const express = require("express")
-const app = express();
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+const { QuickDB } = require("quick.db");
+const db = new QuickDB(); // will make a json.sqlite in the root folder
 
-//Database quick.db
-const db = require(__dirname + '/surveys.js')
- 
-app.post("/surveys", async (req,res)=>{
-    db()
-    res.json({test:"test"})
-    const {title,description,questions} = req.body
-    if(!title || !description || !questions.type || !questions.question )
-        res.json({error:"Lütfen tüm alanları doldurunuz"})
-    
+export function tet(){
+    console.log("firstssssssssssssssssss")
+}
 
-    res.json({test:"test"})
-})
+console.log("first")
 
-app.get("/asd",async (req,res)=>{
-       
+async function createSurvey (){
     await db.set("surveys", 
     [
         {
@@ -47,14 +36,5 @@ app.get("/asd",async (req,res)=>{
                 }
             ]
         }
-    ]);
-    console.log(await db.get("surveys"))
-  
-    console.log("req geldi")
-    res.end("asd deneme");
-})
-
-module.exports = {
-    path:"/api",
-    handler: app
+    ])
 }
