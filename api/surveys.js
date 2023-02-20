@@ -1,40 +1,53 @@
 const { QuickDB } = require("quick.db");
 const db = new QuickDB(); // will make a json.sqlite in the root folder
 
-export function tet(){
-    console.log("firstssssssssssssssssss")
+
+
+
+async function createSurvey (title,description,questions){
+
+    questions.forEach((element,i) => {
+        element.id = i
+        if(element.type == "radio")
+            element.options = element.options.map((option)=> option = {name:option, value:0})
+        if(element.type == "text")
+            element.answers = []
+    });
+
+    let survey = {
+        id:0,
+        title,
+        description,
+        questions
+    }
+
+    await db.push("surveys", survey);
 }
 
-console.log("first")
+async function getSurvey (id){
 
-async function createSurvey (){
-    await db.set("surveys", 
-    [
-        {
-            id:0,
-            title:"Anket başlığı",
-            description:"Anket açıklaması",
-            questions:[
-                {
-                    type:"text",
-                    question:"Kendini 5 yıl sonra nerede görüyorsun?",
-                    placeholder:"Lütfen giriniz",
-                    answers:[
-                        "Çok ileride görüyorum",
-                        "Çok ileride görüyorum",
-                        "Çok ileride görüyorum",
-                    ]
-                },
-                {
-                    type:"radio",
-                    question:"Kendini 5 yıl sonra nerede görüyorsun?",
-                    options:[
-                        {option:"Ankara'da" , count:0},
-                        {option:"İstanbul'da" , count:0},
-                        {option:"Turgutlu'da" , count:0}
-                    ]
-                }
-            ]
-        }
-    ])
+    questions.forEach((element,i) => {
+        element.id = i
+        if(element.type == "radio")
+            element.options = element.options.map((option)=> option = {name:option, value:0})
+        if(element.type == "text")
+            element.answers = []
+    });
+
+    let survey = {
+        id:0,
+        title,
+        description,
+        questions
+    }
+
+    await db.push("surveys", survey);
 }
+
+(async()=>{
+    console.log(await db.get("surveys"))
+})()
+
+module.exports = {
+    createSurvey
+};

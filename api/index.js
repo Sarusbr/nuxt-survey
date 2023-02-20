@@ -2,19 +2,19 @@ const express = require("express")
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
+app.listen(3000)
 //Database quick.db
-const db = require(__dirname + '/surveys.js')
+const db = require('./surveys.js')
  
 app.post("/surveys", async (req,res)=>{
-    db()
-    res.json({test:"test"})
+
     const {title,description,questions} = req.body
-    if(!title || !description || !questions.type || !questions.question )
+    if(!title || !description)
         res.json({error:"Lütfen tüm alanları doldurunuz"})
     
-
-    res.json({test:"test"})
+   
+    db.createSurvey(title,description,questions)
+    res.json({test:"oluşturudu"})
 })
 
 app.get("/asd",async (req,res)=>{

@@ -1,0 +1,30 @@
+
+//get member surveys/5
+{
+    "id":0,
+    "title":"Anket başlığı",
+    "description":"Anket açıklaması",
+    "questions":[
+        {
+            "type":"text",
+            "question":"Kendini 5 yıl sonra nerede görüyorsun?",
+            "placeholder":"Lütfen giriniz",
+            "answers":[
+                "Çok ileride görüyorum",
+                "Çok ileride görüyorum",
+                "Çok ileride görüyorum",
+            ]
+        },
+        {
+            "type":"radio",
+            "question":"Kendini 5 yıl sonra nerede görüyorsun?",
+            "options":[
+                {"option":"Ankara'da" , "count":0},
+                {"option":"İstanbul'da" , "count":0},
+                {"option":"Turgutlu'da" , "count":0}
+            ]
+        }
+    ]
+}
+
+
