@@ -1,6 +1,6 @@
 import colors from "vuetify/es5/util/colors";
 import language from "./configs/language";
-
+import bodyParser from "body-parser";
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -35,17 +35,16 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    "@nuxtjs/axios",
-  ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: "/",
   },
-  modules: [["@nuxtjs/i18n", language]],
+  modules: [
+    ["@nuxtjs/i18n", language],
+    "@nuxtjs/axios",
+  ],
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ["~/assets/variables.scss"],
@@ -69,4 +68,8 @@ export default {
   build: {
     transpile: ["defu", "claygl", "echarts", "zrender"],
   },
+  serverMiddleware:[
+    bodyParser.json(),
+    '~/api'
+  ]
 };
