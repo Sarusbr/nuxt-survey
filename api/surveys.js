@@ -18,9 +18,9 @@ async function createSurvey (title,description,questions){
 
     questions.forEach((element,i) => {
         element.id = i
-        if(element.type == "radio")
+        if(element.type == 0)
             element.options = element.options.map((option)=> option = {name:option, value:0})
-        if(element.type == "text")
+        if(element.type == 1)
             element.answers = []
     });
 

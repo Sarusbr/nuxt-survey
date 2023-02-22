@@ -3,9 +3,9 @@
         <v-app-bar app color="primary">
             <v-app-bar-title class="white--text title">
                 <div>
-                    {{ $store.state.title }}
+                    Istar Anket
                 </div>
-            </v-app-bar-title>
+            </v-app-bar-title> 
         </v-app-bar>
         <v-main>
             <v-container>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-
+    
 }
 </script>
 

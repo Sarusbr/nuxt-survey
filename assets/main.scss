@@ -1,0 +1,8 @@
+.v-input--selection-controls__ripple {
+    display: none; // switch componentinin hoverını kaldırır
+}
+
+.v-btn,.v-tab{
+    text-transform: none !important;
+    letter-spacing: 0px !important;
+}

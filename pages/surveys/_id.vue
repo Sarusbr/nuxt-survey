@@ -1,80 +1,63 @@
 <template>
     <div>
-        <v-card v-for="item,i in asd" class="my-5" elevation="2">
+        <v-card elevation="0">
             <v-card-title>
-                Lorem ipsum dolor sit amet.
+                <div>{{ survey.title }}</div>
             </v-card-title>
-
             <v-card-text>
-
-                <chart v-if="i%2==0" :options="options"></chart>
-
-                <v-window v-else v-model="item.step">
-
-                    <v-window-item v-for="item2 in 8" :value="item2">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem, voluptatum labore modi veniam doloribus ea, qui deleniti minima voluptas deserunt accusantium provident, saepe perferendis veritatis magnam laudantium! Aliquid, officiis quaerat fugiat dolorum laudantium sint consequuntur itaque earum unde eligendi? Amet fugit quasi suscipit maiores maxime magnam, impedit dolorem cumque voluptatibus.
-                    </v-window-item>
-
-                </v-window>
-
+                {{ survey.description }}
+                <v-divider></v-divider>
             </v-card-text>
-
-            <v-card-actions v-if="i%2!=0">
-                <v-btn
-                    :disabled="item.step == 1"
-                    text
-                    @click="item.step--"
-                >
-                    Back
-                </v-btn>
-                <v-spacer></v-spacer>
-                <div>{{ item.step }} / 8</div>
-                <v-spacer></v-spacer>
-                <v-btn
-                    :disabled="item.step == 8"
-                    color="primary"
-                    depressed
-                    @click="item.step++"
-                >
-                    Next
-                </v-btn>
-            </v-card-actions>
         </v-card>
+        <v-card class="mb-9" v-for="item,i in survey.questions" :key="i">
+            <v-card-title>
+                {{ item.question }}
+            </v-card-title>
+            <v-card-text v-if="item.type == 1">
+                <v-textarea v-model="result.find(e=>e.id == item.id).value" outlined :placeholder="item.placeholder"></v-textarea>
+            </v-card-text>
+            <v-card-text v-else>
+                <v-list>
+                    <v-list-item-group color="primary" v-model="result.find(e=>e.id == item.id).value">
+                        <v-list-item class="bg" v-for="option,index in item.options" :value="option" :key="index">
+                            {{ option }}
+                        </v-list-item>
+                    </v-list-item-group>
+                </v-list>
+            </v-card-text>
+        </v-card>
+        <v-card-title>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click="sendResult">Anketi bitir</v-btn>
+        </v-card-title>
     </div>
-</template>
-
+  </template>
+    
 <script>
 export default{
-    data(){
+    async asyncData({$axios,params}){
+        const survey = await $axios.$get("/surveys/"+params.id)
+        console.log(survey)
+        const result = survey.questions.map(item=>{
+            return{
+                value:"",
+                id:item.id
+            }
+        })
         return{
-            options:{
-                data:[
-                    { value: 1, name: 'Aile' },
-                    { value: 5, name: 'Yaşam' },
-                    { value: 7, name: 'Geçimsizlik' },
-                    { value: 12, name: 'Sevgi' },
-                    { value: 3, name: 'Şiddet' },
-                    { value: 2, name: 'Ekonomi' },
-                ],
-                style:{
-                    height:"250px"
-                },
-                step:1
-            },
-            asd: []
+            survey,
+            result
         }
     },
     created(){
-        this.$store.state.title = this.$route.params.id;
-        for (let i = 0; i < 20; i++) {
-            this.asd.push({
-                step:1
-            })
+        this.$store.commit("setTitle",this.survey.title)
+        this.$store.commit("setDescription",this.survey.description)
+    },
+    methods:{
+        async sendResult(){
+            const res = await this.$axios.$patch("/surveys/"+this.survey.id,this.result)
+            console.log(res);
         }
     }
 }
 </script>
-
-<style lang="scss">
-
-</style>
